@@ -7,36 +7,44 @@ using System.Windows.Forms;
 
 namespace CaptchaRecognition
 {
-    public partial class Form1 : Form
+    public partial class CaptchaForm : Form
     {
-        private Image<Bgr, byte> image;
-        private Image<Bgr, byte> invimage;
+        private Image<Bgr, byte> InImage;
+        private Image<Bgr, byte> ThresImage;
+        private Image<Bgr, byte> BitNotImage;
+        private Image<Bgr, byte> OutImage;
 
-        public Form1()
+        public CaptchaForm()
         {
             InitializeComponent();
-            ofd.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
+            ofd.Filter = "Image files (*.bmp, *.jpg, *.jpeg, *.png) | *.bmp; *.jpg; *.jpeg; *.png";
         }
 
-        private void loadMenuItem_Click(object sender, EventArgs e)
+        private void LoadMenuItem_Click(object sender, EventArgs e)
         {
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                image = new Image<Bgr, byte>(ofd.FileName);
-                invimage = image;
-                image = image.ThresholdBinary(new Bgr(100, 100, 100), new Bgr(255, 255, 255));
-                CvInvoke.BitwiseNot(image, invimage);
-                CvInvoke.MorphologyEx(invimage, image, Emgu.CV.CvEnum.MorphOp.Dilate,
-                  CvInvoke.GetStructuringElement(Emgu.CV.CvEnum.ElementShape.Ellipse, new Size(3, 3), new Point(-1, -1)),
-                  new Point(-1, -1), 1, Emgu.CV.CvEnum.BorderType.Default, new MCvScalar());
-                pictureBox1.Image = image.ToBitmap();
-                pictureBox1.Invalidate();
+                captchaBox.Image = Image.FromFile(ofd.FileName);
+                captchaBox.Invalidate();
+            }
+        }
 
-                Tesseract t = new Tesseract();
-                t.SetVariable("tessedit_char_whitelist", "abcdefghijklmnopqrstuvwxyz0123456789");
-                t.Init(@"C:\Emgu\emgucv-windesktop 3.1.0.2504\Emgu.CV.World\tessdata", "eng", OcrEngineMode.Default);
-                t.Recognize(image);
-                textBox1.Text = t.GetText();
+        private void Recognize_Click(object sender, EventArgs e)
+        {
+            if (ofd.FileName != "")
+            {
+                InImage = new Image<Bgr, byte>(ofd.FileName);
+                BitNotImage = ThresImage = OutImage = InImage;
+                ThresImage = InImage.ThresholdBinary(new Bgr(100, 100, 100), new Bgr(255, 255, 255));
+                CvInvoke.BitwiseNot(ThresImage, BitNotImage);
+                CvInvoke.MorphologyEx(BitNotImage, OutImage, Emgu.CV.CvEnum.MorphOp.Dilate,
+                    CvInvoke.GetStructuringElement(Emgu.CV.CvEnum.ElementShape.Ellipse, new Size(3, 3), new Point(-1, -1)),
+                    new Point(-1, -1), 1, Emgu.CV.CvEnum.BorderType.Default, new MCvScalar());
+
+                Tesseract tess = new Tesseract();
+                tess.Init(@"C:\Emgu\emgucv-windesktop 3.1.0.2504\Emgu.CV.World\tessdata", "eng", OcrEngineMode.Default);
+                tess.Recognize(OutImage);
+                result.Text = "Результат: " + tess.GetText();
             }
         }
     }

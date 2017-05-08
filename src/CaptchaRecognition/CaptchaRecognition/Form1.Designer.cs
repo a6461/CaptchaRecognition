@@ -1,6 +1,6 @@
 ﻿namespace CaptchaRecognition
 {
-    partial class Form1
+    partial class CaptchaForm
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -28,63 +28,81 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.loadMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.captchaBox = new System.Windows.Forms.PictureBox();
+            this.menu = new System.Windows.Forms.MenuStrip();
+            this.LoadMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ofd = new System.Windows.Forms.OpenFileDialog();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.menuStrip1.SuspendLayout();
+            this.Recognize = new System.Windows.Forms.Button();
+            this.result = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.captchaBox)).BeginInit();
+            this.menu.SuspendLayout();
             this.SuspendLayout();
             // 
-            // pictureBox1
+            // captchaBox
             // 
-            this.pictureBox1.BackColor = System.Drawing.SystemColors.Window;
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 24);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(276, 303);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.captchaBox.BackColor = System.Drawing.SystemColors.Window;
+            this.captchaBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.captchaBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.captchaBox.Location = new System.Drawing.Point(0, 24);
+            this.captchaBox.Name = "captchaBox";
+            this.captchaBox.Size = new System.Drawing.Size(321, 84);
+            this.captchaBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.captchaBox.TabIndex = 0;
+            this.captchaBox.TabStop = false;
             // 
-            // menuStrip1
+            // menu
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(599, 24);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
+            this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LoadMenuItem});
+            this.menu.Location = new System.Drawing.Point(0, 0);
+            this.menu.Name = "menu";
+            this.menu.Size = new System.Drawing.Size(321, 24);
+            this.menu.TabIndex = 1;
+            this.menu.Text = "menuStrip1";
             // 
-            // loadMenuItem
+            // LoadMenuItem
             // 
-            this.loadMenuItem.Name = "loadMenuItem";
-            this.loadMenuItem.Size = new System.Drawing.Size(73, 20);
-            this.loadMenuItem.Text = "Загрузить";
-            this.loadMenuItem.Click += new System.EventHandler(this.loadMenuItem_Click);
+            this.LoadMenuItem.Name = "LoadMenuItem";
+            this.LoadMenuItem.Size = new System.Drawing.Size(143, 20);
+            this.LoadMenuItem.Text = "Выбрать изображение";
+            this.LoadMenuItem.Click += new System.EventHandler(this.LoadMenuItem_Click);
             // 
-            // textBox1
+            // Recognize
             // 
-            this.textBox1.Location = new System.Drawing.Point(325, 60);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 2;
+            this.Recognize.Location = new System.Drawing.Point(234, 125);
+            this.Recognize.Name = "Recognize";
+            this.Recognize.Size = new System.Drawing.Size(75, 23);
+            this.Recognize.TabIndex = 3;
+            this.Recognize.Text = "Распознать";
+            this.Recognize.UseVisualStyleBackColor = true;
+            this.Recognize.Click += new System.EventHandler(this.Recognize_Click);
             // 
-            // Form1
+            // result
+            // 
+            this.result.AutoSize = true;
+            this.result.Location = new System.Drawing.Point(12, 125);
+            this.result.Name = "result";
+            this.result.Size = new System.Drawing.Size(62, 13);
+            this.result.TabIndex = 4;
+            this.result.Text = "Результат:";
+            // 
+            // CaptchaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(599, 327);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
-            this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.ClientSize = new System.Drawing.Size(321, 165);
+            this.Controls.Add(this.result);
+            this.Controls.Add(this.Recognize);
+            this.Controls.Add(this.captchaBox);
+            this.Controls.Add(this.menu);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MainMenuStrip = this.menu;
+            this.MaximizeBox = false;
+            this.Name = "CaptchaForm";
+            this.Text = "Распознавание капчи";
+            ((System.ComponentModel.ISupportInitialize)(this.captchaBox)).EndInit();
+            this.menu.ResumeLayout(false);
+            this.menu.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -92,11 +110,12 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem loadMenuItem;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.PictureBox captchaBox;
+        private System.Windows.Forms.MenuStrip menu;
+        private System.Windows.Forms.ToolStripMenuItem LoadMenuItem;
         private System.Windows.Forms.OpenFileDialog ofd;
+        private System.Windows.Forms.Button Recognize;
+        private System.Windows.Forms.Label result;
     }
 }
 
