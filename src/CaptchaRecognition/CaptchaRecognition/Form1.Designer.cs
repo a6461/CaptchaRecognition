@@ -34,6 +34,7 @@
             this.ofd = new System.Windows.Forms.OpenFileDialog();
             this.Recognize = new System.Windows.Forms.Button();
             this.result = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.captchaBox)).BeginInit();
             this.menu.SuspendLayout();
             this.SuspendLayout();
@@ -69,7 +70,7 @@
             // 
             // Recognize
             // 
-            this.Recognize.Location = new System.Drawing.Point(234, 125);
+            this.Recognize.Location = new System.Drawing.Point(234, 152);
             this.Recognize.Name = "Recognize";
             this.Recognize.Size = new System.Drawing.Size(75, 23);
             this.Recognize.TabIndex = 3;
@@ -80,17 +81,28 @@
             // result
             // 
             this.result.AutoSize = true;
-            this.result.Location = new System.Drawing.Point(12, 125);
+            this.result.Location = new System.Drawing.Point(12, 157);
             this.result.Name = "result";
             this.result.Size = new System.Drawing.Size(62, 13);
             this.result.TabIndex = 4;
             this.result.Text = "Результат:";
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(15, 124);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(206, 17);
+            this.checkBox1.TabIndex = 5;
+            this.checkBox1.Text = "Морфологические преобразования";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // CaptchaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(321, 165);
+            this.ClientSize = new System.Drawing.Size(321, 190);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.result);
             this.Controls.Add(this.Recognize);
             this.Controls.Add(this.captchaBox);
@@ -116,6 +128,7 @@
         private System.Windows.Forms.OpenFileDialog ofd;
         private System.Windows.Forms.Button Recognize;
         private System.Windows.Forms.Label result;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 

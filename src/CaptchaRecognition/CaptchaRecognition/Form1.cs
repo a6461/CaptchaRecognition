@@ -9,10 +9,10 @@ namespace CaptchaRecognition
 {
     public partial class CaptchaForm : Form
     {
-        private Image<Bgr, byte> InImage;
-        private Image<Bgr, byte> ThresImage;
-        private Image<Bgr, byte> BitNotImage;
-        private Image<Bgr, byte> OutImage;
+        private Image<Gray, byte> InImage;
+        private Image<Gray, byte> ThresImage;
+        private Image<Gray, byte> BitNotImage;
+        private Image<Gray, byte> OutImage;
 
         public CaptchaForm()
         {
@@ -33,17 +33,23 @@ namespace CaptchaRecognition
         {
             if (ofd.FileName != "")
             {
-                InImage = new Image<Bgr, byte>(ofd.FileName);
+                InImage = new Image<Gray, byte>(ofd.FileName);
                 BitNotImage = ThresImage = OutImage = InImage;
-                ThresImage = InImage.ThresholdBinary(new Bgr(100, 100, 100), new Bgr(255, 255, 255));
+                
+                OutImage = ThresImage = InImage.ThresholdBinary(new Gray(200), new Gray(255));
                 CvInvoke.BitwiseNot(ThresImage, BitNotImage);
-                CvInvoke.MorphologyEx(BitNotImage, OutImage, Emgu.CV.CvEnum.MorphOp.Dilate,
-                    CvInvoke.GetStructuringElement(Emgu.CV.CvEnum.ElementShape.Ellipse, new Size(3, 3), new Point(-1, -1)),
-                    new Point(-1, -1), 1, Emgu.CV.CvEnum.BorderType.Default, new MCvScalar());
+                if (checkBox1.Checked)
+                    CvInvoke.MorphologyEx(BitNotImage, OutImage, Emgu.CV.CvEnum.MorphOp.Dilate,
+                        CvInvoke.GetStructuringElement(Emgu.CV.CvEnum.ElementShape.Ellipse, new Size(3, 3), new Point(-1, -1)),
+                        new Point(-1, -1), 1, Emgu.CV.CvEnum.BorderType.Default, new MCvScalar());
 
                 Tesseract tess = new Tesseract();
-                tess.Init(@"C:\Emgu\emgucv-windesktop 3.1.0.2504\Emgu.CV.World\tessdata", "eng", OcrEngineMode.Default);
+
+                tess.Init(@"C:\Emgu\tessdata", "eng", OcrEngineMode.Default);
+                tess.SetVariable("tessedit_char_blacklist", "\\/'`‘");
                 tess.Recognize(OutImage);
+                captchaBox.Image = OutImage.ToBitmap();
+                captchaBox.Refresh();
                 result.Text = "Результат: " + tess.GetText();
             }
         }
